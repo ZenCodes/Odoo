@@ -1,0 +1,133 @@
+<openerp>
+    <data>
+<!--  form view -->
+<record model="ir.ui.view" id="view_incomingorder_form">
+	    <field name="name">Imcomingorder</field>
+	    <field name="model">incomingorder.tracking</field>
+	    <field name="type">form</field>
+	    <field name="arch" type="xml">
+	        <form string="Incoming order">
+
+		    <!--The header tag is to add buttons -->
+		    <header>
+		        <button string="Set to receipt" type="object" name="receipt_progressbar" attrs="{'invisible': [('state', '=', 'receipt')]}" confirm="Are you sure you want to do this?"/>
+		
+			<button string="Set to counting" type="object" name="counting_progressbar" class="oe_highlight" attrs="{'invisible': [('state','=','counting')]}"/>
+			<button string="Set to Acceptance" type="object" name="acceptance_progressbar" attrs="{'invisible': [('state','=','acceptance')]}"/>
+			<button string="Set to Quality" type="object" name="quality_progressbar" attrs="{'invisible': [('state','=','quality')]}"/>
+			<button string="Set to purchase" type="object" name="purchase_progressbar" attrs="{'invisible': [('state','=','purchase')]}"/>
+			<button string="Set to grn" type="object" name="grn_progressbar" attrs="{'invisible': [('state','=','grn')]}"/>
+		
+		    <field name="state" widget="statusbar"/>
+		    </header>
+		<sheet>
+		<group col="3">
+           <group>
+             <field name="description"/>
+		  <field name="supplier"/>             
+           </group>
+           <group>
+             <field name="grade"/>
+           </group>
+		<group>
+             <field name="size"/>
+             <field name="stock"/>
+             <field name="general"/>
+		</group>
+           </group>
+		<hr/>
+		<group col="3">
+           <group>
+             <field name="ponum"/>	        
+           </group>
+           <group>
+             <field name="podate"/>
+           </group>
+		<group>
+             <field name="porate"/>
+		</group>
+           </group>
+		<hr/>
+		<group col="3">
+           <group>
+             <field name="invoicenum"/>	        
+           </group>
+           <group>
+             <field name="invoicedate"/>
+           </group>
+		<group>
+             <field name="invoicerate"/>
+		</group>
+           </group>
+		<hr/>
+		<group col="3">
+		<group>
+		  <field name="granno"/>
+		  <field name="receiveddate"/>
+		</group>
+		<group>
+		  <field name="inwardno"/>
+		</group>
+		<group>
+		  <field name="roomno"/>
+		  <field name="vehicleno"/>
+		</group> 
+		</group>
+		<hr/>
+	      <group>
+  <table style='width:100%;' border='1'>
+    <tr>
+      <th style='width:40%; font-weight:bold'><label for="coilno"/></th>
+      <th style='width:20%; font-weight:bold'><label for="coilno"/></th>
+      <th style='width:40%; font-weight:bold'><label for="coilno"/></th>
+    </tr>
+    <tr>
+      <td><field name="coilno"/></td>
+      <td><field name="coilno"/></td>
+      <td><field name="coilno"/></td>
+    </tr> 
+ </table>
+</group> 
+          </sheet>
+		</form>
+	    </field>
+	</record>
+
+    <!--List View-->
+    <record id="view_incomingorder_tree" model="ir.ui.view">
+        <field name="name">incomingorder.tree</field>
+        <field name="model">incomingorder.tracking</field>
+        <field name="arch" type="xml">
+            <!--list/tree view -->
+            <tree string="Incoming order">
+             <field name="description"/>
+             <field name="supplier"/>
+             <field name="grade"/>
+             <field name="size"/>
+             <field name="stock"/>
+             <field name="general"/>   
+            </tree>
+        </field>
+    </record>
+
+	<!--The action -->
+        <record model="ir.actions.act_window" id="incomingorder_action">
+            <field name="name">Incoming order</field>
+            <field name="res_model">incomingorder.tracking</field>
+            <field name="view_type">tree</field>
+            <field name="view_mode">form,tree</field>
+            <field name='view_id' ref='view_incomingorder_form'/>
+        </record>
+
+<!-- top menu -->
+        <menuitem id="main_statusbar_menu" name="Incoming order"/>
+        <menuitem id="statusbar_menu" name="Incoming order"
+                  parent="main_statusbar_menu"/>
+        <menuitem id="menu_detail_statusbar"
+                action="incomingorder_action" parent="statusbar_menu"
+                sequence="20"/>
+
+
+    </data>
+</openerp>
+

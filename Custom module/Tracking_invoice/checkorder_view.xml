@@ -1,0 +1,51 @@
+<openerp>
+    <data>
+<!--  form view -->
+<record model="ir.ui.view" id="view_checkorder_form">
+	    <field name="name">ckeckorder</field>
+	    <field name="model">checkorder.tracking</field>
+	    <field name="type">form</field>
+	    <field name="arch" type="xml">
+	        <form string="check order">
+		    <!--The header tag is to add buttons -->
+		    <header>
+      		
+			<button string="Set to counting" type="object" name="counting_progressbar" class="oe_highlight" attrs="{'invisible': [('state','=','counting')]}"/>
+			<button string="Set to Acceptance" type="object" name="acceptance_progressbar" attrs="{'invisible': [('state','=','acceptance')]}"/>
+			<button string="Set to Quality" type="object" name="quality_progressbar" attrs="{'invisible': [('state','=','quality')]}"/>
+			<button string="Set to purchase" type="object" name="purchase_progressbar" attrs="{'invisible': [('state','=','purchase')]}"/>
+			<button string="Set to grn" type="object" name="grn_progressbar" attrs="{'invisible': [('state','=','grn')]}"/>
+		
+		        <field name="state" widget="statusbar"/>
+		    </header>
+		    <group>
+			<field name="name"/>
+			<field name="quantity"/>
+			<field name="invoiceno"/>
+
+		    </group>
+		</form>
+	    </field>
+	</record>
+
+    <!--List View-->
+    <record id="view_checkorder_tree" model="ir.ui.view">
+        <field name="name">checkorder.tree</field>
+        <field name="model">checkorder.tracking</field>
+        <field name="arch" type="xml">
+            <!--list/tree view -->
+            <tree string="check order">
+               
+                   <field name="name" />
+			   <field name="quantity" />
+		        <field name="invoiceno" attrs="{'invisible':[('quantity', '!=', '10')]}"/>
+
+   
+            </tree>
+        </field>
+    </record>
+
+	
+    </data>
+</openerp>
+

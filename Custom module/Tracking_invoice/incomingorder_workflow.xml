@@ -1,0 +1,94 @@
+<openerp>
+    <data>
+
+<!-- header record -->
+<record model="workflow" id="wkf_incomingorder">
+<field name="name">incomingorder.wkf</field>
+<field name="osv">incomingorder</field>
+<field name="on_create">True</field>
+</record>
+
+<!--Contracts -->
+<!-- activity record -->
+<record model="workflow.activity" id="act_incomingorder_receipt">
+<field name="wkf_id" ref="wkf_incomingorder" />
+<field name="flow_start">True</field>
+<field name="name">receipt</field>
+<field name="kind">function</field>
+<field name="action">receipt_progressbar()</field>
+</record>
+
+<record model="workflow.activity" id="act_incomingorder_counting">
+<field name="wkf_id" ref="wkf_incomingorder" />
+<field name="name">counting</field>
+<field name="kind">function</field>
+<field name="action">counting_progressbar()</field>
+</record>
+
+<record model="workflow.activity" id="act_incomingorder_acceptance">
+<field name="wkf_id" ref="wkf_incomingorder" />
+<field name="name">acceptance</field>
+<field name="kind">function</field>
+<field name="action">acceptance_progressbar()</field>
+</record>
+
+<record model="workflow.activity" id="act_incomingorder_quality">
+<field name="wkf_id" ref="wkf_incomingorder" />
+<field name="name">quality</field>
+<field name="kind">function</field>
+<field name="action">quality_progressbar()</field>
+</record>
+
+<record model="workflow.activity" id="act_incomingorder_purchase">
+<field name="wkf_id" ref="wkf_incomingorder" />
+<field name="name">purchase</field>
+<field name="kind">function</field>
+<field name="action">purchase_progressbar()</field>
+</record>
+
+<record model="workflow.activity" id="act_incomingorder_grn">
+<field name="wkf_id" ref="wkf_incomingorder" />
+<field name="name">grn</field>
+<field name="kind">function</field>
+<field name="flow_stop">True</field>
+<field name="action">grn_progressbar()</field>
+</record>
+
+<!-- transition record -->
+<record model="workflow.transition" id="order_t1">
+<field name="act_from" ref="act_incomingorder_receipt" />
+<field name="act_to" ref="act_incomingorder_counting" />
+<field name="condition">quantity &gt; 50</field>
+<field name="signal">receipt_progressbar</field>
+
+
+</record>
+
+<record model="workflow.transition" id="order_t2">
+<field name="act_from" ref="act_incomingorder_counting" />
+<field name="act_to" ref="act_incomingorder_acceptance" />
+<field name="signal">acceptance_progressbar</field>
+</record>
+
+<record model="workflow.transition" id="order_t3">
+<field name="act_from" ref="act_incomingorder_acceptance" />
+<field name="act_to" ref="act_incomingorder_quality" />
+  
+<field name="signal">quality_progressbar</field>
+</record>
+
+<record model="workflow.transition" id="order_t4">
+<field name="act_from" ref="act_incomingorder_quality" />
+<field name="act_to" ref="act_incomingorder_purchase" />
+<field name="signal">purchase_progressbar</field>
+</record>
+
+<record model="workflow.transition" id="order_t5">
+<field name="act_from" ref="act_incomingorder_purchase" />
+<field name="act_to" ref="act_incomingorder_grn" />
+<field name="signal">grn_progressbar</field>
+</record>
+
+
+    </data>
+  </openerp>
